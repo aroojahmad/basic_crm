@@ -1,30 +1,39 @@
 import Config
 
+# Only in tests, remove the complexity from the password hashing algorithm
+config :bcrypt_elixir, :log_rounds, 1
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
-config :petal_boilerplate, PetalBoilerplate.Repo,
+config :basic_crm, BasicCrm.Repo,
   username: "postgres",
   password: "postgres",
-  database: "petal_boilerplate_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "basic_crm_test#{System.get_env("MIX_TEST_PARTITION")}",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :petal_boilerplate, PetalBoilerplateWeb.Endpoint,
+config :basic_crm, BasicCrmWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "cPNzM6yNbuYM9FcYYtqL/PPFpiGQD5Tdxe4pRe8KYGFJ8gwI3Zgl6VL80H6pFeOp",
-  server: false
+  secret_key_base: "jO/W+G/Qx2j1vaL3e08mem3yYnkgOD2lRNuZaK4/cT17Ehpo5rrUoOGigq5RjxOu",
+  server: true
 
 # In test we don't send emails.
-config :petal_boilerplate, PetalBoilerplate.Mailer, adapter: Swoosh.Adapters.Test
+config :basic_crm, BasicCrm.Mailer, adapter: Swoosh.Adapters.Test
 
 # Print only warnings and errors during test
 config :logger, level: :warn
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :basic_crm, BasicCrm.Mailer,
+  adapter: Bamboo.TestAdapter
+
+config :wallaby, otp_app: :basic_crm
+config :basic_crm, :sandbox, Ecto.Adapters.SQL.Sandbox

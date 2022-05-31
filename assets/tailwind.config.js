@@ -1,19 +1,11 @@
-const colors = require("tailwindcss/colors");
-
 module.exports = {
+  mode: 'jit',
   content: [
-    "../lib/*_web/**/*.*ex",
-    "./js/**/*.js",
-    "../deps/petal_components/**/*.*ex",
+    './js/**/*.js',
+    '../lib/*_web/**/*.*ex'
   ],
-  theme: {
-    extend: {
-      colors: {
-        primary: colors.blue,
-        secondary: colors.pink,
-      },
-    },
-  },
-  plugins: [require("@tailwindcss/forms")],
-  darkMode: "class",
-};
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('daisyui')
+  ],
+}

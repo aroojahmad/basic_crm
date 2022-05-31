@@ -7,15 +7,15 @@
 # General application configuration
 import Config
 
-config :petal_boilerplate,
-  ecto_repos: [PetalBoilerplate.Repo]
+config :basic_crm,
+  ecto_repos: [BasicCrm.Repo]
 
 # Configures the endpoint
-config :petal_boilerplate, PetalBoilerplateWeb.Endpoint,
+config :basic_crm, BasicCrmWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: PetalBoilerplateWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: PetalBoilerplate.PubSub,
-  live_view: [signing_salt: "Fd8SWPu3"]
+  render_errors: [view: BasicCrmWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: BasicCrm.PubSub,
+  live_view: [signing_salt: "R9pDsgA+"]
 
 # Configures the mailer
 #
@@ -24,19 +24,29 @@ config :petal_boilerplate, PetalBoilerplateWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :petal_boilerplate, PetalBoilerplate.Mailer, adapter: Swoosh.Adapters.Local
+config :basic_crm, BasicCrm.Mailer, adapter: Swoosh.Adapters.Local
 
 # Swoosh API client is needed for adapters other than SMTP.
 config :swoosh, :api_client, false
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.14.0",
+  version: "0.12.18",
   default: [
-    args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    args: ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+config :tailwind,
+  version: "3.0.18",
+  default: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configures Elixir's Logger
@@ -47,18 +57,27 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :petal_components, :error_translator_function, {PetalBoilerplateWeb.ErrorHelpers, :translate_error}
+config :basic_crm, :env, Mix.env()
 
-config :tailwind,
-  version: "3.0.12",
-  default: [
-    args: ~w(
-      --config=tailwind.config.js
-      --input=css/app.css
-      --output=../priv/static/assets/app.css
-    ),
-    cd: Path.expand("../assets", __DIR__)
-  ]
+config :waffle,
+  storage: Waffle.Storage.S3, # or Waffle.Storage.Local
+  bucket: System.get_env("AWS_BUCKET_NAME") # if using S3
+
+# If using S3:
+config :ex_aws,
+  json_codec: Jason,
+  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
+  region: System.get_env("AWS_REGION")
+
+config :basic_crm, BasicCrm.Mailer,
+  adapter: Bamboo.MandrillAdapter,
+  api_key: "my_api_key"
+
+config :kaffy,
+   otp_app: :basic_crm,
+   ecto_repo: BasicCrm.Repo,
+   router: BasicCrmWeb.Router
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

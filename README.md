@@ -1,21 +1,20 @@
-# Petal Boilerplate
+# BasicCrm
 
-A clean install of the latest Phoenix with some extras to get you started:
-- Tailwind CSS - using the [mix library](https://hexdocs.pm/tailwind/Tailwind.html)
-- Alpine JS - using a CDN to avoid needing `node_modules`
-- 🌺 [Petal Components Library](https://github.com/petalframework/petal_components)
+To start your Phoenix server:
 
-## Get up and running
+  * Install dependencies with `mix deps.get`
+  * Create and migrate your database with `mix ecto.setup`
+  * Install Node.js dependencies with `npm install` inside the `assets` directory
+  * Start Phoenix endpoint with `mix phx.server`
 
-Optionally change your database name in `dev.exs`.
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-1. Setup the project with `mix setup`
-2. Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
-3. Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## Renaming your project
+## Learn more
 
-Your app module is currently called `PetalBoilerplate`. There is a script file included that will rename your project to anything you like in one go.
-Open the file `rename_phoenix_project.sh` and read the instructions at the top.
-
-
+  * Official website: https://www.phoenixframework.org/
+  * Guides: https://hexdocs.pm/phoenix/overview.html
+  * Docs: https://hexdocs.pm/phoenix
+  * Forum: https://elixirforum.com/c/phoenix-forum
+  * Source: https://github.com/phoenixframework/phoenix

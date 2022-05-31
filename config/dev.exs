@@ -1,7 +1,7 @@
 import Config
 
 # Configure your database
-config :petal_boilerplate, PetalBoilerplate.Repo,
+config :basic_crm, BasicCrm.Repo,
   username: "postgres",
   password: "postgres",
   database: "basic_crm_dev",
@@ -15,15 +15,16 @@ config :petal_boilerplate, PetalBoilerplate.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with esbuild to bundle .js and .css sources.
-config :petal_boilerplate, PetalBoilerplateWeb.Endpoint,
+config :basic_crm, BasicCrmWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "47TFd8fpLTZROcN4Lxz/OQ5fz4hVFMNCsSxHKwSrRGZGxDcWKyGH+1uxAtGYn1/Q",
+  secret_key_base: "Q1rNg/s+f0xj1F8ID7e1JYerNK3uNUqzQIUt8y7F5+ivoA7sdor9T6vwbrdEfGUE",
   watchers: [
+    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
@@ -53,14 +54,13 @@ config :petal_boilerplate, PetalBoilerplateWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :petal_boilerplate, PetalBoilerplateWeb.Endpoint,
+config :basic_crm, BasicCrmWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/petal_boilerplate_web/(live|views)/.*(ex)$",
-      ~r"lib/petal_boilerplate_web/templates/.*(eex)$",
-      ~r"../petal_components/lib/.*(ex)$"
+      ~r"lib/basic_crm_web/(live|views)/.*(ex)$",
+      ~r"lib/basic_crm_web/templates/.*(eex)$"
     ]
   ]
 
@@ -73,3 +73,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :basic_crm, BasicCrm.Mailer,
+  adapter: Bamboo.LocalAdapter
